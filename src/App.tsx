@@ -2,6 +2,9 @@ import { ToastProvider } from "@/components/ui/toast";
 import Hero from "@/components/sections/Hero";
 import PainPoints from "@/components/sections/PainPoints";
 import Solution from "@/components/sections/Solution";
+import Cases from "@/components/sections/Cases";
+import FAQ from "@/components/sections/FAQ";
+import { Suspense } from "react";
 
 function App() {
   return (
@@ -10,6 +13,10 @@ function App() {
         <Hero />
         <PainPoints />
         <Solution />
+        <Suspense fallback={<div className="min-h-[400px]" />}>
+          <Cases />
+          <FAQ />
+        </Suspense>
       </div>
     </ToastProvider>
   );
