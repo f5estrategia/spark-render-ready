@@ -37,16 +37,6 @@ export default function ContactForm() {
     }
   };
 
-  const capturarIP = async () => {
-    try {
-      const res = await fetch("https://api.ipify.org?format=json");
-      const data = await res.json();
-      return data.ip;
-    } catch (e) {
-      console.error("Erro ao capturar IP:", e);
-      return "";
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,56 +48,43 @@ export default function ContactForm() {
       // Capturar UTMs da URL
       const params = new URLSearchParams(window.location.search);
 
-      // Capturar IP do usuário
-      const ipUsuario = await capturarIP();
-
       // Capturar dados do dispositivo/navegador
       const userAgent = navigator.userAgent;
       const dispositivo = /Mobile|Android|iPhone/i.test(userAgent)
         ? "Mobile"
         : "Desktop";
 
-      // Montar objeto completo
-      const dadosLead = {
+      // Preparar dados para enviar ao Edge Function
+      const payload = {
         nome: validatedData.nome,
         email: validatedData.email,
         telefone: validatedData.telefone,
-        campos_personalizado: {
-          instagram_clinica: validatedData.instagram_clinica,
-          origem_formulario: "Landing Page Evento",
-        },
-        politicas_privacidade: true,
-
-        // UTMs
-        utm_source: params.get("utm_source") || "",
-        utm_medium: params.get("utm_medium") || "",
-        utm_campaign: params.get("utm_campaign") || "",
-        utm_term: params.get("utm_term") || "",
-        utm_content: params.get("utm_content") || "",
-
-        // Identificadores
-        nome_formulario: "Formulário Landing Page",
-        id_formulario: "form-lp-evento",
-        id_pagina: window.location.pathname,
-
-        // Origem e navegação
-        referral_source: document.referrer || "Direto",
-        url_conversao: window.location.href,
-
-        // Dados técnicos
-        dispositivo,
-        user_agent: userAgent,
-        ip_usuario: ipUsuario,
-
-        // Timestamp
-        data_conversao: new Date().toISOString(),
-        received_at: new Date().toISOString(),
+        instagram_clinica: validatedData.instagram_clinica,
+        metadata: {
+          utm_source: params.get("utm_source") || "",
+          utm_medium: params.get("utm_medium") || "",
+          utm_campaign: params.get("utm_campaign") || "",
+          utm_term: params.get("utm_term") || "",
+          utm_content: params.get("utm_content") || "",
+          id_pagina: window.location.pathname,
+          referral_source: document.referrer || "Direto",
+          url_conversao: window.location.href,
+          dispositivo,
+          user_agent: userAgent,
+        }
       };
 
-      // Insert no Supabase
-      const { error } = await supabase.from("leads_topo" as any).insert([dadosLead]);
+      // Chamar Edge Function com rate limiting
+      const { data, error } = await supabase.functions.invoke('submit-lead', {
+        body: payload
+      });
 
-      if (error) throw error;
+      if (error) {
+        if ((error as any).rateLimitExceeded) {
+          throw new Error("Você atingiu o limite de envios. Tente novamente mais tarde.");
+        }
+        throw error;
+      }
 
       toast({
         title: "Inscrição realizada!",
