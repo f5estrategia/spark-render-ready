@@ -14,7 +14,81 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      leads: {
+        Row: {
+          campos_personalizado: Json | null
+          created_at: string
+          data_conversao: string | null
+          dispositivo: string | null
+          email: string
+          id: string
+          id_formulario: string | null
+          id_pagina: string | null
+          ip_usuario: string | null
+          nome: string
+          nome_formulario: string | null
+          politicas_privacidade: boolean | null
+          received_at: string | null
+          referral_source: string | null
+          telefone: string
+          url_conversao: string | null
+          user_agent: string | null
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          utm_term: string | null
+        }
+        Insert: {
+          campos_personalizado?: Json | null
+          created_at?: string
+          data_conversao?: string | null
+          dispositivo?: string | null
+          email: string
+          id?: string
+          id_formulario?: string | null
+          id_pagina?: string | null
+          ip_usuario?: string | null
+          nome: string
+          nome_formulario?: string | null
+          politicas_privacidade?: boolean | null
+          received_at?: string | null
+          referral_source?: string | null
+          telefone: string
+          url_conversao?: string | null
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Update: {
+          campos_personalizado?: Json | null
+          created_at?: string
+          data_conversao?: string | null
+          dispositivo?: string | null
+          email?: string
+          id?: string
+          id_formulario?: string | null
+          id_pagina?: string | null
+          ip_usuario?: string | null
+          nome?: string
+          nome_formulario?: string | null
+          politicas_privacidade?: boolean | null
+          received_at?: string | null
+          referral_source?: string | null
+          telefone?: string
+          url_conversao?: string | null
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
