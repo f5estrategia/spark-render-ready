@@ -1,6 +1,16 @@
-import { XCircle, TrendingDown, UsersRound, BarChart3 } from "lucide-react";
+import { XCircle, TrendingDown, UsersRound, BarChart3, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function PainPoints() {
+  const scrollToForm = () => {
+    const formSection = document.getElementById("inscricao");
+    if (formSection) {
+      const headerHeight = 100;
+      const targetPosition = formSection.offsetTop - headerHeight - 20;
+      window.scrollTo({ top: targetPosition, behavior: "smooth" });
+    }
+  };
+
   const pains = [
     {
       icon: XCircle,
@@ -76,11 +86,19 @@ export default function PainPoints() {
             <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
               O problema não é a Black Friday. É a ESTRATÉGIA.
             </h3>
-            <p className="text-lg text-[hsl(var(--text-secondary))] max-w-3xl mx-auto">
+            <p className="text-lg text-[hsl(var(--text-secondary))] max-w-3xl mx-auto mb-6">
               Enquanto você hesita, seu concorrente está lotando a agenda com
               pacientes de alto valor usando as mesmas técnicas que vamos revelar
               nesta live.
             </p>
+            <Button
+              onClick={scrollToForm}
+              size="lg"
+              className="text-sm md:text-base font-bold uppercase tracking-wide px-8 py-6"
+            >
+              QUERO PARTICIPAR AGORA
+              <ArrowRight className="ml-2 h-5 w-5 inline-block" />
+            </Button>
           </div>
         </div>
       </div>

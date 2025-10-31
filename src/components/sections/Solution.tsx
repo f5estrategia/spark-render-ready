@@ -1,6 +1,16 @@
-import { Gift, Users, Megaphone, Briefcase, Video, Book, CheckCircle } from "lucide-react";
+import { Gift, Users, Megaphone, Briefcase, Video, Book, CheckCircle, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function Solution() {
+  const scrollToForm = () => {
+    const formSection = document.getElementById("inscricao");
+    if (formSection) {
+      const headerHeight = 100;
+      const targetPosition = formSection.offsetTop - headerHeight - 20;
+      window.scrollTo({ top: targetPosition, behavior: "smooth" });
+    }
+  };
+
   const pilares = [
     {
       numero: 1,
@@ -143,9 +153,17 @@ export default function Solution() {
               <div className="text-[hsl(var(--text-secondary))] line-through text-xl mb-2">
                 De R$ 497,00
               </div>
-              <div className="text-5xl font-extrabold text-[#D4AF37]">
+              <div className="text-5xl font-extrabold text-[#D4AF37] mb-6">
                 POR GRATUITO!
               </div>
+              <Button
+                onClick={scrollToForm}
+                size="lg"
+                className="text-sm md:text-base font-bold uppercase tracking-wide px-8 py-6"
+              >
+                GARANTIR MINHA VAGA AGORA
+                <ArrowRight className="ml-2 h-5 w-5 inline-block" />
+              </Button>
             </div>
           </div>
         </div>

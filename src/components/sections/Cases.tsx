@@ -1,6 +1,16 @@
-import { Building2, TrendingUp, DollarSign, Target } from "lucide-react";
+import { Building2, TrendingUp, DollarSign, Target, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function Cases() {
+  const scrollToForm = () => {
+    const formSection = document.getElementById("inscricao");
+    if (formSection) {
+      const headerHeight = 100;
+      const targetPosition = formSection.offsetTop - headerHeight - 20;
+      window.scrollTo({ top: targetPosition, behavior: "smooth" });
+    }
+  };
+
   const numeros = [
     { icon: Building2, numero: "3.000+", label: "Clínicas Atendidas", sublabel: "Mais de 8 anos no mercado de saúde" },
     { icon: Target, numero: "50+", label: "Marcas Odontológicas", sublabel: "Referência nacional" },
@@ -58,12 +68,20 @@ export default function Cases() {
             </div>
             <h3 className="text-2xl font-bold text-white mb-2">Fernando Machado</h3>
             <p className="text-[hsl(var(--f5-orange))] font-semibold mb-6">CEO da f5 Estratégia - Aceleradora de Vendas</p>
-            <ul className="text-[hsl(var(--text-secondary))] space-y-2 max-w-md mx-auto">
+            <ul className="text-[hsl(var(--text-secondary))] space-y-2 max-w-md mx-auto mb-8">
               <li>✓ Especialista certificado RD Station</li>
               <li>✓ +20 anos em vendas e marketing digital</li>
               <li>✓ Transformação de +3.000 clínicas</li>
               <li>✓ Referência em aceleração para o mercado de saúde</li>
             </ul>
+            <Button
+              onClick={scrollToForm}
+              size="lg"
+              className="text-sm md:text-base font-bold uppercase tracking-wide px-8 py-6"
+            >
+              INSCREVER-SE NA LIVE
+              <ArrowRight className="ml-2 h-5 w-5 inline-block" />
+            </Button>
           </div>
         </div>
       </div>

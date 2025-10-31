@@ -51,14 +51,18 @@ export default function Hero() {
           <div className="text-center animate-fade-in-up mb-12">
             <h1 className="mb-8">
               <span className="block text-sm md:text-base font-medium text-white uppercase tracking-[2px] mb-4">
-                Black Friday Odonto 2025 - Live Gratuita
+                Live Gratuita
               </span>
-              <span className="block text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-4 drop-shadow-[0_0_30px_rgba(255,99,71,0.5)] leading-tight">
-                Black Friday Odonto 2025: Como Faturar{" "}
+              <span className="block text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 drop-shadow-[0_0_30px_rgba(255,99,71,0.5)] leading-tight">
+                <span className="bg-gradient-to-r from-white via-orange-200 to-[hsl(var(--f5-orange))] bg-clip-text text-transparent">
+                  Como Faturar{" "}
+                </span>
                 <span className="bg-gradient-to-r from-[hsl(var(--f5-orange))] via-orange-400 to-[hsl(var(--f5-orange-dark))] bg-clip-text text-transparent">
                   3x Mais
-                </span>{" "}
-                Sem Queimar Margem
+                </span>
+                <span className="bg-gradient-to-r from-white via-orange-200 to-[hsl(var(--f5-orange))] bg-clip-text text-transparent">
+                  {" "}Sem Queimar Margem
+                </span>
               </span>
             </h1>
 

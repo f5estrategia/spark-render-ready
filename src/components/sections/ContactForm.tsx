@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+
 import { ArrowRight, CheckCircle } from "lucide-react";
 import { useToast } from "@/components/ui/toast";
 import { z } from "zod";
@@ -13,7 +13,7 @@ const formSchema = z.object({
     .string()
     .trim()
     .min(10, "Telefone deve ter no mínimo 10 dígitos"),
-  mensagem: z.string().trim().min(1, "Mensagem é obrigatória"),
+  instagram_clinica: z.string().trim().min(1, "Instagram da clínica é obrigatório"),
 });
 
 export default function ContactForm() {
@@ -22,7 +22,7 @@ export default function ContactForm() {
     email: "",
     telefone: "",
     telefoneDisplay: "",
-    mensagem: "",
+    instagram_clinica: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -73,7 +73,7 @@ export default function ContactForm() {
         email: validatedData.email,
         telefone: validatedData.telefone,
         campos_personalizado: {
-          mensagem: validatedData.mensagem,
+          instagram_clinica: validatedData.instagram_clinica,
           origem_formulario: "Landing Page Evento",
         },
         politicas_privacidade: true,
@@ -105,13 +105,13 @@ export default function ContactForm() {
       };
 
       // Insert no Supabase
-      const { error } = await supabase.from("leads").insert([dadosLead]);
+      const { error } = await supabase.from("leads_topo" as any).insert([dadosLead]);
 
       if (error) throw error;
 
       toast({
         title: "Inscrição realizada!",
-        description: "Em breve você receberá mais informações no seu email.",
+        description: "Redirecionando...",
       });
 
       setFormData({
@@ -119,8 +119,13 @@ export default function ContactForm() {
         email: "",
         telefone: "",
         telefoneDisplay: "",
-        mensagem: "",
+        instagram_clinica: "",
       });
+
+      // Redirecionar para página de obrigado
+      setTimeout(() => {
+        window.location.href = "https://materiais.f5estrategia.com.br/obrigado-black-friday-17-11";
+      }, 1500);
 
       // Disparar evento para GTM/Pixel
       if ((window as any).dataLayer) {
@@ -172,13 +177,12 @@ export default function ContactForm() {
   const benefits = [
     "Acesso exclusivo ao evento ao vivo",
     "Material complementar gratuito",
-    "Certificado de participação",
     "Networking com outros participantes",
   ];
 
   return (
     <section
-      id="contato"
+      id="inscricao"
       className="py-16 md:py-24 bg-[hsl(var(--luxury-black))] relative overflow-hidden"
     >
       {/* Background com gradient */}
@@ -304,17 +308,24 @@ export default function ContactForm() {
                 </label>
               </div>
 
-              {/* Mensagem */}
-              <div>
-                <Textarea
-                  id="mensagem"
-                  name="mensagem"
-                  value={formData.mensagem}
+              {/* Instagram da Clínica */}
+              <div className="relative">
+                <input
+                  type="text"
+                  id="instagram_clinica"
+                  name="instagram_clinica"
+                  value={formData.instagram_clinica}
                   onChange={handleChange}
                   required
-                  placeholder="O que você espera aprender no evento?"
-                  rows={4}
+                  className="w-full bg-[hsl(var(--luxury-gray))] border border-white/10 rounded-lg md:rounded-xl px-3 md:px-4 pt-5 md:pt-6 pb-2 text-sm md:text-base text-white focus:outline-none focus:border-[hsl(var(--f5-orange))] transition-colors peer"
+                  placeholder=" "
                 />
+                <label
+                  htmlFor="instagram_clinica"
+                  className="absolute left-3 md:left-4 top-3 md:top-4 text-xs md:text-sm text-[hsl(var(--text-muted))] transition-all peer-focus:top-1.5 md:peer-focus:top-2 peer-focus:text-[10px] md:peer-focus:text-xs peer-focus:text-[hsl(var(--f5-orange))] peer-[&:not(:placeholder-shown)]:top-1.5 md:peer-[&:not(:placeholder-shown)]:top-2 peer-[&:not(:placeholder-shown)]:text-[10px] md:peer-[&:not(:placeholder-shown)]:text-xs"
+                >
+                  Instagram da clínica
+                </label>
               </div>
 
               {/* Submit Button */}
@@ -330,7 +341,7 @@ export default function ContactForm() {
               </Button>
 
               <p className="text-[10px] md:text-xs text-center text-[hsl(var(--text-muted))] leading-relaxed mt-3">
-                🔒 Seus dados estão protegidos. Resposta em até 24h.
+                🔒 Seus dados estão protegidos.
               </p>
             </form>
           </div>
